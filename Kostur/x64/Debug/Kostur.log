@@ -1,0 +1,6 @@
+﻿  Main.cpp
+C:\Users\velim\Desktop\Kostur\Source\Main.cpp(84,26): warning C4566: character represented by universal-character-name '\u0111' cannot be represented in the current code page (1252)
+C:\Users\velim\Desktop\Kostur\Source\Main.cpp(290,37): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\velim\Desktop\Kostur\Source\Main.cpp(291,20): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\velim\Desktop\Kostur\Source\Main.cpp(410,43): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  Kostur.vcxproj -> C:\Users\velim\Desktop\Kostur\x64\Debug\Kostur.exe
