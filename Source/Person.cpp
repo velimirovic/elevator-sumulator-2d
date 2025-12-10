@@ -56,7 +56,7 @@ void movePersonLeftRight(GLFWwindow* window, float deltaTime) {
 void handlePersonEnterExit() {
 
     // Ulazak - samo ako je lift na istom spratu kao osoba i su vrata otvorena
-    if (doorsFullyOpen && liftFloor == personFloor && canEnterLift) {
+    if (doorsFullyOpen && liftFloor == personFloor && canEnterLift && !liftMoving) {
         if (!personInLift && personX > 0.75f) {
             personInLift = true;
             personEnteredFloor = personFloor;

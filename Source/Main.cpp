@@ -37,41 +37,42 @@ void keyboard_callback(GLFWwindow* window, int key, int scancode, int action, in
 
     // C - pozivanje lifta
     if (key == GLFW_KEY_C && action == GLFW_PRESS) {
-        // Pozovi lift samo ako osoba nije u liftu
         if (!personInLift) {
-            // Proveri da li je osoba dovoljno desno (blizu lifta)
             if (personX < 0.75f) {
-                std::cout << "Osoba mora biti blize liftu!" << std::endl;
+                std::cout << "Osoba mora biti blize liftu" << std::endl;
                 return;
             }
 
-            // Ako je lift vec ovde, samo otvori vrata
-            if (personFloor == liftFloor) {
-                if (!doorsOpen) {  // Ako vrata nisu vec otvorena
+            // Proveri da li vec postoji u listi targetFloors
+            bool alreadyInQueue = false;
+            for (int f : targetFloors) {
+                if (f == personFloor) {
+                    alreadyInQueue = true;
+                    break;
+                }
+            }
+
+            // Ako je lift bas na istom spratu (ne gleda da li ima ciljeve), otvori vrata
+            if (personFloor == liftFloor && !liftMoving) {
+                if (!doorsOpen) {
                     doorsOpen = true;
                     doorTimer = 5.0f;
+                    canEnterLift = true;
                     std::cout << "Lift je ovde - otvaraju se vrata" << std::endl;
                 }
                 else {
-                    std::cout << "Lift je vec ovde sa otvorenim vratima!" << std::endl;
+                    std::cout << "Lift je vec ovde sa otvorenim vratima" << std::endl;
                 }
             }
-            // Inace pozovi lift da dođe
+            // Inace, ako lift nije na ovom spratu i nije vec pozvan, dodaj u listu
+            else if (!alreadyInQueue) {
+                targetFloors.push_back(personFloor);
+                liftMoving = true;
+                std::cout << "Osoba poziva lift na sprat " << personFloor << std::endl;
+            }
+            // Ako je vec pozvan, ne radi nista
             else {
-                // Proveri da li vec postoji u listi
-                bool already = false;
-                for (int f : targetFloors) {
-                    if (f == personFloor) {
-                        already = true;
-                        break;
-                    }
-                }
-
-                if (!already) {
-                    targetFloors.push_back(personFloor);
-                    liftMoving = true;
-                    std::cout << "Osoba poziva lift na sprat " << personFloor << std::endl;
-                }
+                std::cout << "Lift je vec pozvan na ovaj sprat" << std::endl;
             }
         }
     }
@@ -81,13 +82,13 @@ void keyboard_callback(GLFWwindow* window, int key, int scancode, int action, in
         // Osoba moze da izadje samo ako je u liftu i vrata su potpuno otvorena
         if (personInLift && doorsFullyOpen && !doorsFullyClosed) {
             shouldExit = true;
-            std::cout << "Osoba želi da izađe na spratu " << liftFloor << std::endl;
+            std::cout << "Osoba zeli da izađe na spratu " << liftFloor << std::endl;
         }
         else if (!personInLift) {
-            std::cout << "Osoba nije u liftu!" << std::endl;
+            std::cout << "Osoba nije u liftu" << std::endl;
         }
         else if (!doorsFullyOpen || doorsFullyClosed) {
-            std::cout << "Vrata nisu potpuno otvorena!" << std::endl;
+            std::cout << "Vrata nisu potpuno otvorena" << std::endl;
         }
     }
 }

@@ -1,5 +1,6 @@
-#include "../Header/Lift.h"
+﻿#include "../Header/Lift.h"
 #include <iostream>
+#include "../Header/Person.h"
 
 // Konstante
 const float LIFT_SPEED = 0.3f;
@@ -29,19 +30,23 @@ void updateLift(float deltaTime, std::vector<Button>& buttons) {
     // Animacija vrata
     if (doorsOpen && doorOffset < 0.12f) {
         doorOffset += DOOR_SPEED * deltaTime;
-        if (doorOffset > 0.12f) {
+        if (doorOffset >= 0.12f) {
             doorOffset = 0.12f;
             doorsFullyOpen = true;
             doorsFullyClosed = false;
         }
     }
     else if (!doorsOpen && doorOffset > 0.0f) {
-        doorsFullyOpen = false;
+        if (doorOffset < 0.1f) {
+            doorsFullyOpen = false;
+        }
+
         doorOffset -= DOOR_SPEED * deltaTime;
-        if (doorOffset < 0.0f) {
+        if (doorOffset <= 0.0f) {
             doorOffset = 0.0f;
             doorsFullyClosed = true;
             doorsFullyOpen = false;
+            canEnterLift = true;
             openButtonPressed = false;
         }
     }
@@ -80,6 +85,8 @@ void updateLift(float deltaTime, std::vector<Button>& buttons) {
             // Stigao na sprat - otvori vrata
             doorsOpen = true;
             doorTimer = DOOR_OPEN_TIME;
+            canEnterLift = true;
+            liftMoving = false;
 
             if (ventilationOn) {
                 ventilationOn = false;
@@ -114,6 +121,8 @@ void updateLift(float deltaTime, std::vector<Button>& buttons) {
             // Stigao na sprat - otvori vrata
             doorsOpen = true;
             doorTimer = DOOR_OPEN_TIME;
+            canEnterLift = true;
+            liftMoving = false;
 
             // Ugasi taster
             for (auto& btn : buttons) {

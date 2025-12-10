@@ -69,7 +69,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
             if (glX >= btn.x - halfWidth && glX <= btn.x + halfWidth &&
                 glY >= btn.y - halfHeight && glY <= btn.y + halfHeight) {
 
-                // Tasteri se mogu kliktati samo ako je osoba u liftu!
+                // Tasteri se mogu kliktati samo ako je osoba u liftu
                 if (!personInLift) {
                     std::cout << "Osoba mora biti u liftu da bi koristila tastere!" << std::endl;
                     return;  // Ignorisi klik
@@ -99,9 +99,8 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
                 else if (btn.floorNumber == -1) {  // OPEN
                     if (doorOffset > 0.0f && !openButtonPressed) {
                         doorsOpen = true;
-                        doorTimer = 5.0f; // DOOR_OPEN_TIME
+                        doorTimer = 5.0f;
                         openButtonPressed = true;
-                        doorsFullyOpen = false;
                         std::cout << "OPEN - vrata produzena za 5s" << std::endl;
                     }
                 }
