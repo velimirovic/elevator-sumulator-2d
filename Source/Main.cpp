@@ -82,7 +82,7 @@ void keyboard_callback(GLFWwindow* window, int key, int scancode, int action, in
         // Osoba moze da izadje samo ako je u liftu i vrata su potpuno otvorena
         if (personInLift && doorsFullyOpen && !doorsFullyClosed) {
             shouldExit = true;
-            std::cout << "Osoba zeli da izađe na spratu " << liftFloor << std::endl;
+            std::cout << "Osoba zeli da izadje na spratu " << liftFloor << std::endl;
         }
         else if (!personInLift) {
             std::cout << "Osoba nije u liftu" << std::endl;
@@ -189,7 +189,7 @@ int main()
 
     unsigned int leftTexture = loadImageToTexture("Resources/left_side.jpg");
     glBindTexture(GL_TEXTURE_2D, leftTexture);
-    glGenerateMipmap(GL_TEXTURE_2D);
+	glGenerateMipmap(GL_TEXTURE_2D); // Menja rezulucije tekstura da bi optimalno izgledale na razlicitim skalama
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -208,8 +208,8 @@ int main()
     glGenerateMipmap(GL_TEXTURE_2D);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     unsigned int personWalk[6];
     for (int i = 0; i < 6; i++) {
@@ -219,8 +219,8 @@ int main()
         glGenerateMipmap(GL_TEXTURE_2D);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     }
 
     fontTexture = loadImageToTexture("Resources/font.png");
@@ -228,8 +228,8 @@ int main()
     glGenerateMipmap(GL_TEXTURE_2D);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     cursorPropeller = loadImageToCursor("Resources/propeller_on.png");
     cursorNormal = loadImageToCursor("Resources/propeller_off.png");
@@ -250,6 +250,7 @@ int main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+	//Svi objekti su mi pravougaonici pa pravim jedan VAO i VBO koji cu koristiti za sve
     float vertices[] = {
         -0.5f,  0.5f,  0.0f, 1.0f,
         -0.5f, -0.5f,  0.0f, 0.0f,

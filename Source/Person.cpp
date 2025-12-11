@@ -14,6 +14,7 @@ int personFloor = 1;
 int personEnteredFloor = 1;
 bool shouldExit = false;
 bool canEnterLift = true;
+const float PERSON_SPEED = 0.5f;
 
 //Kretanje osobe
 void movePersonLeftRight(GLFWwindow* window, float deltaTime) {
@@ -25,14 +26,14 @@ void movePersonLeftRight(GLFWwindow* window, float deltaTime) {
     isWalking = false;
 
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        personX -= 0.005f;
+        personX -= PERSON_SPEED * deltaTime;
         if (personX < 0.015f)
             personX = 0.015f;
         facingRight = false;  // Gleda levo
         isWalking = true;
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        personX += 0.005f;
+        personX += PERSON_SPEED * deltaTime;
         if (personX > 0.83f)
             personX = 0.83f;
         facingRight = true;  // Gleda desno
